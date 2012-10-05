@@ -6,7 +6,6 @@ import dateutil.parser
 import httplib2
 import json
 import pytz
-import requests
 import sys
 import urllib
 
