@@ -1,5 +1,4 @@
-*.pyc
-calendar_id.json
-client_secrets.json
-__credentials__
 .DS_Store
+*.pyc
+__credentials__
+settings.json

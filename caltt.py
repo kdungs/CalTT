@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 # coding=utf-8
 
 import datetime
@@ -12,13 +12,18 @@ import urllib
 from oauth2client.client import OAuth2WebServerFlow
 from oauth2client.file import Storage
 
+DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+
+with open('settings.json') as settings_file:
+    SETTINGS = json.load(settings_file)
+
 storage = Storage('__credentials__')
 credentials = storage.get()
 
 if not credentials:
     flow = OAuth2WebServerFlow(
-        client_id="<YOUR CLIENT ID>",
-        client_secret="<YOUR CLIENT SECRET>",
+        client_id=SETTINGS['client_id'],
+        client_secret=SETTINGS['client_secret'],
         scope="https://www.googleapis.com/auth/calendar.readonly",
         redirect_uri="urn:ietf:wg:oauth:2.0:oob"
     )
@@ -32,12 +37,11 @@ if not credentials:
 http = httplib2.Http()
 http = credentials.authorize(http)
 
-CAL_ID = "<YOUR CALENDER ID>"
-_start = datetime.datetime(2012, 10, 8, tzinfo=pytz.timezone("Europe/Berlin"))
+_start = datetime.datetime(2013, 1, 14, tzinfo=pytz.timezone("Europe/Berlin"))
 _end = _start + datetime.timedelta(weeks=1)
 
 REQUEST = "https://www.googleapis.com/calendar/v3/calendars/{}/events?timeMin={}&timeMax={}".format(
-    urllib.quote(CAL_ID),
+    urllib.quote(SETTINGS['cal_id']),
     urllib.quote(_start.isoformat()),
     urllib.quote(_end.isoformat())
 )
@@ -60,32 +64,17 @@ for event in events:
             'title': event['summary'],
             'type': event['summary'].split(" ")[-1],
             'location': event['location'],
-            'description': event['description'],
             'start': start,
             'end': end
         }
+        if event.has_key('description'):
+            TIMETABLE[start]['description'] = event['description']
 
-for key in sorted(TIMETABLE):
-    print(key)
-    for k, v in TIMETABLE[key].iteritems():
-        print(u"{}:\t{}".format(k, v))
-    print("")
+TT_by_day = [[
+    TIMETABLE[x] for x in TIMETABLE.iterkeys() if TIMETABLE[x]["start"].weekday() == day
+] for day in range(5)]
 
-
-
-"""
-# for later
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from PyQt4.QtWebKit import *
-
-# …
-
-QTapp = QApplication(sys.argv)
-
-QTweb = QWebView()
-QTweb.load(QUrl(auth_uri))
-QTweb.show()
-
-sys.exit(QTapp.exec_())
-"""
+for day in range(5):
+    print(DAYS[day])
+    for event in sorted(TT_by_day[day], key=lambda t: t['start'].time()):
+        print(u"{1} {0}".format(event['title'], event['start'].strftime("%H:%M")))
