@@ -40,7 +40,7 @@ if not credentials:
 http = httplib2.Http()
 http = credentials.authorize(http)
 
-start = datetime.datetime(2013, 1, 14, tzinfo=pytz.timezone("Europe/Berlin"))
+start = datetime.datetime(2012, 12, 10, tzinfo=pytz.timezone("Europe/Berlin"))
 end = start + datetime.timedelta(weeks=1)
 
 REQUEST = "https://www.googleapis.com/calendar/v3/calendars/{}/events?timeMin={}&timeMax={}".format(
@@ -72,5 +72,5 @@ for event in map(
 
 for day in TIMETABLE:
     print(DAYS[day])
-    for _e in TIMETABLE[day]:
+    for _e in sorted(TIMETABLE[day], key=lambda e: e.start.time()):
         print(u"{1} {0}".format(_e.title, _e.start.strftime("%H:%M")))
