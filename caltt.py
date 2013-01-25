@@ -7,7 +7,6 @@ import collections
 import datetime
 import dateutil.parser
 import httplib2
-import itertools
 import json
 import pytz
 import sys
