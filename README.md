@@ -5,7 +5,7 @@ Generate a nice timetable from your Google Calendar.
 **This code is heavily under development.** Don't expect anything to work yet.
 
 ## What's this?
-Google Calendar is a pretty nifty thing you might use every day. However when it comes to planning your weekly schedule in school or university you might want something more timetable-ish. This is where CalTT - short for **Cal**endar **T**ime**T**able - comes into play. Since you probably have already put all your relevant events (lectures, tutorials, etc.) in a seperate calendar (e.g. labeled "University"), using CalTT is easily done in four steps:
+Google Calendar is a pretty nifty thing you might use every day. However when it comes to planning your weekly schedule in school or university you might want something more timetable-ish. This is where CalTT - short for **Cal**endar **T**ime **T**able - comes into play. Since you probably have already put all your relevant events (lectures, tutorials, etc.) in a seperate calendar (e.g. labeled "University"), using CalTT is easily done in four steps:
  * Obtain your calendar's ID (looks something like randommixoflettersanddigits@group.calendar.google.com)
  * Clone this repository
  * _[Generate an OAuth Key](https://code.google.com/apis/console) (For your own safety at this point… Likely to be improved/removed in future versions.)_
