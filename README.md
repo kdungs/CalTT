@@ -11,6 +11,17 @@ Google Calendar is a pretty nifty thing you might use every day. However when it
  * _[Generate an OAuth Key](https://code.google.com/apis/console) (For your own safety at this point… Likely to be improved/removed in future versions.)_
  * Run `caltt.py` _(At this point there is no HTML output, yet. This is soon to be added, of course.)_
 
+## Settings
+You have to have a `settings.json` file present in the same directory as caltt.py. It should look like the following:
+```json
+{
+    "cal_id": "<YOUR CALENDAR ID>",
+    "client_id": "<YOUR APP'S CLIENT ID>",
+    "client_secret": "<YOUR APP'S CLIENT SECRET>"
+}
+```
+where you have to replace the values in brackets, of course.
+
 ## License
 All of the code in this project, if not stated otherwise, is licensed under the terms of the MIT License.
 
