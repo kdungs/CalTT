@@ -56,13 +56,14 @@ if response.status != 200:
 
 events = json.loads(content)['items']
 
-Event = collections.namedtuple('Event', ['title', 'type', 'location', 'start', 'end'])
+Event = collections.namedtuple('Event', ['title', 'type', 'description', 'location', 'start', 'end'])
 TIMETABLE = collections.defaultdict(list)
 for event in map(
     lambda _e: Event(
         _e['summary'],
         _e['summary'].split(" ")[-1],
-        _e['location'],
+        _e.get('description', ""),
+        _e.get('location', ""),
         dateutil.parser.parse(_e['start']['dateTime']),
         dateutil.parser.parse(_e['end']['dateTime'])
     ),
